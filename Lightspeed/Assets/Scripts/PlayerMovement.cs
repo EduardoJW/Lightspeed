@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public List<Vector3> playerPath = new List<Vector3>();
+    public int horizontalDirection;
+    public int verticalDirection;
+    public bool isVertical;
 
     private float dt;
     private float velocityPlayer;
     private float[] velocities;
     private int velocityIndex;
 
-    private int horizontalDirection;
-    private int verticalDirection;
-    private bool isVertical;
     private float xPlayer;
     private float yPlayer;
 
