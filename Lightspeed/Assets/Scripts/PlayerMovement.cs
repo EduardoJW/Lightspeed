@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public List<Vector3> playerPath = new List<Vector3>();
+
     private float dt;
     private float velocityPlayer;
     private float[] velocities;
@@ -71,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         }
             
         this.transform.position += new Vector3(xPlayer, yPlayer, 0);
+        playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         
     }
 }
