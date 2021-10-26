@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public List<Vector3> playerPath = new List<Vector3>();
-    public int horizontalDirection;
-    public int verticalDirection;
-    public bool isVertical;
+    [HideInInspector] public List<Vector3> playerPath = new List<Vector3>();
+    [HideInInspector] public int horizontalDirection;
+    [HideInInspector] public int verticalDirection;
+    [HideInInspector] public bool isVertical;
 
     private float dt;
     private float velocityPlayer;
@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
 
     private float xPlayer;
     private float yPlayer;
+
+    private bool oldIsVertical = false;
+    private int oldHorizontalDirection = 1;
+    private int oldVerticalDirection = 1;
 
 
     // Start is called before the first frame update
@@ -71,9 +75,81 @@ public class PlayerMovement : MonoBehaviour
             yPlayer = 0;
                 
         }
+
+        changeDirection();
             
         this.transform.position += new Vector3(xPlayer, yPlayer, 0);
         playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         
+    }
+
+    void changeDirection ()
+    {
+        if (isVertical != oldIsVertical)
+        {
+            rotationSprite();
+        }
+
+        oldIsVertical = isVertical;
+        oldHorizontalDirection = horizontalDirection;
+        oldVerticalDirection = verticalDirection;
+    }
+
+    void rotationSprite ()
+    {
+        float z = 0;
+
+        if (oldIsVertical)
+        {
+            if (oldVerticalDirection == 1)
+            {
+                if (horizontalDirection == -1)
+                {
+                    z = 90;
+                }
+                else if (horizontalDirection == 1)
+                {
+                    z = 270;
+                }
+            }
+            else if (oldVerticalDirection == -1)
+            {
+                if (horizontalDirection == -1)
+                {
+                    z = 270;
+                }
+                else if (horizontalDirection == 1)
+                {
+                    z = 90;
+                }
+            }
+        }
+        else
+        {
+            if (oldHorizontalDirection == -1)
+            {
+                if (verticalDirection == -1)
+                {
+                    z = 90;
+                }
+                else if (verticalDirection == 1)
+                {
+                    z = 270;
+                }
+            }
+            else if (oldHorizontalDirection == 1)
+            {
+                if (verticalDirection == -1)
+                {
+                    z = 270;
+                }
+                else if (verticalDirection == 1)
+                {
+                    z = 90;
+                }
+            }
+        }
+
+        this.transform.Rotate(0, 0, z);          
     }
 }
