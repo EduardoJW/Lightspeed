@@ -30,17 +30,15 @@ public class Wall : MonoBehaviour
     {
         path = playerScript.playerPath;
 
+        if (walls.Count < wallSize && path.Count > velocityFactors[velocityIndex] * dt * (walls.Count + 1))
+            growWall();
 
         if (walls.Count > 0)
         {
             for (int i = 0; i < walls.Count; i++)
             {
                 indexPath = (int)(path.Count - velocityFactors[velocityIndex] * dt * (1 + i));
-                if (playerScript.isVertical)
-                    walls[i].position = path[indexPath]/* - new Vector3(0, playerScript.verticalDirection * 1f * dt, 0)*/;
-                    
-                else
-                    walls[i].position = path[indexPath]/* - new Vector3(playerScript.horizontalDirection * 1f * dt, 0, 0)*/;
+                walls[i].position = path[indexPath];
             }
         }
     }
@@ -62,8 +60,6 @@ public class Wall : MonoBehaviour
     void FixedUpdate()
     {
         dt = Time.deltaTime;
-        if (walls.Count < wallSize)
-            growWall();
         updateWall(dt);
     }
 
