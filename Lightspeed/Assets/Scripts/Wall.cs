@@ -33,14 +33,14 @@ public class Wall : MonoBehaviour
 
         if (walls.Count > 0)
         {
-            for (int i = 1; i < walls.Count; i++)
+            for (int i = 0; i < walls.Count; i++)
             {
                 indexPath = (int)(path.Count - velocityFactors[velocityIndex] * dt * (1 + i));
-                //Debug.Log("indexpath: " + indexPath);
                 if (playerScript.isVertical)
-                    walls[i].position = path[indexPath] - new Vector3(0, playerScript.verticalDirection * 0.1f * dt, 0);
+                    walls[i].position = path[indexPath]/* - new Vector3(0, playerScript.verticalDirection * 1f * dt, 0)*/;
+                    
                 else
-                    walls[i].position = path[indexPath] - new Vector3(playerScript.horizontalDirection * 0.1f * dt, 0, 0);
+                    walls[i].position = path[indexPath]/* - new Vector3(playerScript.horizontalDirection * 1f * dt, 0, 0)*/;
             }
         }
     }
@@ -56,17 +56,20 @@ public class Wall : MonoBehaviour
 
 
         walls = new List<Transform>();
-
-        for (int i = 0; i < wallSize; i++)
-        {
-            growWall();
-        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         dt = Time.deltaTime;
+        if (walls.Count < wallSize)
+            growWall();
         updateWall(dt);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
+            Destroy(this.gameObject);
     }
 }
