@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [HideInInspector] public List<Vector3> playerPath = new List<Vector3>();
+    [HideInInspector] public List<Vector3> playerPath;
     [HideInInspector] public int horizontalDirection;
     [HideInInspector] public int verticalDirection;
     [HideInInspector] public bool isVertical;
@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private int oldHorizontalDirection = 1;
     private int oldVerticalDirection = 1;
 
+    private Vector3 startingPosition;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
         horizontalDirection = 1;
         verticalDirection = 1;
-        isVertical = false; 
-        
+        isVertical = false;
+
+        playerPath = new List<Vector3>();
+
+        startingPosition = this.transform.position;
     }
 
     // Update is called once per frame
@@ -151,5 +156,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         this.transform.Rotate(0, 0, z);          
+    }
+
+    public void resetPosition()
+    {
+        this.transform.position = startingPosition;
+        Start();
     }
 }

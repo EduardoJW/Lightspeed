@@ -28,7 +28,7 @@ public class PlayerAttributes : MonoBehaviour
         powerUp = power;
     }
 
-    void removeLife ()
+    public void removeLife ()
     {
         lifes--;
 

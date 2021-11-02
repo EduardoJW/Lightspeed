@@ -14,8 +14,10 @@ public class Wall : MonoBehaviour
     private List<Transform> walls;
     private int indexPath;
     private int velocityIndex;
+    private bool[] isHorizontal;
 
     PlayerMovement playerScript;
+    PlayerAttributes playerAttributes;
     private List<Vector3> path;
 
     private List<Transform> segments = new List<Transform>();
@@ -38,6 +40,12 @@ public class Wall : MonoBehaviour
             for (int i = 0; i < walls.Count; i++)
             {
                 indexPath = (int)(path.Count - velocityFactors[velocityIndex] * dt * (1 + i));
+                if ((isHorizontal[i] && walls[i].position.x == path[indexPath].x) || (!isHorizontal[i] && walls[i].position.y == path[indexPath].y))
+                    walls[i].RotateAround(walls[i].position, Vector3.forward, 90);
+                if (walls[i].position.x == path[indexPath].x)
+                    isHorizontal[i] = false;
+                else
+                    isHorizontal[i] = true;
                 walls[i].position = path[indexPath];
             }
         }
@@ -47,11 +55,12 @@ public class Wall : MonoBehaviour
     void Start()
     {
         playerScript = this.GetComponent<PlayerMovement>();
+        playerAttributes = this.GetComponent<PlayerAttributes>();
 
         velocities = new float[4] { 2.0f, 4.0f, 8.0f, 16.0f };
-        velocityFactors = new int[4] { 600, 300, 150, 50 };
+        velocityFactors = new int[4] { 200, 300, 150, 50 };
         velocityIndex = 0;
-
+        isHorizontal = new bool[wallSize];
 
         walls = new List<Transform>();
     }
@@ -66,6 +75,14 @@ public class Wall : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
-            Destroy(this.gameObject);
+        {
+            playerAttributes.removeLife();
+            for (int i = walls.Count - 1; i >= 0; i--)
+            {
+                Destroy(walls[i].gameObject);
+                walls.Remove(walls[i]);
+            }
+            playerScript.resetPosition();
+        }
     }
 }
