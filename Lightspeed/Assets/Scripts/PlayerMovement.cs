@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public int horizontalDirection;
     [HideInInspector] public int verticalDirection;
     [HideInInspector] public bool isVertical;
+    public bool isPlayer2;
 
     private float dt;
     private float velocityPlayer;
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        velocities = new float[1]{2.0f};
+        velocities = new float[1] { 2.0f };
         velocityIndex = 0;
 
         horizontalDirection = 1;
@@ -44,51 +45,87 @@ public class PlayerMovement : MonoBehaviour
     {
         dt = Time.deltaTime;
 
-        velocityPlayer = velocities[velocityIndex]*dt;
+        velocityPlayer = velocities[velocityIndex] * dt;
 
         if (isVertical)
         {
-            if (Input.GetAxis("Horizontal") > 0)
+            if (isPlayer2)
             {
-                horizontalDirection = 1;
-                isVertical = false;
-            } 
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                horizontalDirection = -1;
-                isVertical = false;
-            }
+                if (Input.GetAxis("Horizontal_P2") > 0)
+                {
+                    horizontalDirection = 1;
+                    isVertical = false;
+                }
+                else if (Input.GetAxis("Horizontal_P2") < 0)
+                {
+                    horizontalDirection = -1;
+                    isVertical = false;
+                }
 
-            xPlayer = 0;
-            yPlayer = velocityPlayer*verticalDirection;
-                
-        } 
+                xPlayer = 0;
+                yPlayer = velocityPlayer * verticalDirection;
+            }
+            else
+            {
+                if (Input.GetAxis("Horizontal") > 0)
+                {
+                    horizontalDirection = 1;
+                    isVertical = false;
+                }
+                else if (Input.GetAxis("Horizontal") < 0)
+                {
+                    horizontalDirection = -1;
+                    isVertical = false;
+                }
+
+                xPlayer = 0;
+                yPlayer = velocityPlayer * verticalDirection;
+            }
+        }
         else
         {
-            if (Input.GetAxis("Vertical") > 0)
+            if (isPlayer2)
             {
-                verticalDirection = 1;
-                isVertical = true;
-            } 
-            else if (Input.GetAxis("Vertical") < 0)
-            {
-                verticalDirection = -1;
-                isVertical = true;
-            }            
+                if (Input.GetAxis("Vertical_P2") > 0)
+                {
+                    verticalDirection = 1;
+                    isVertical = true;
+                }
+                else if (Input.GetAxis("Vertical_P2") < 0)
+                {
+                    verticalDirection = -1;
+                    isVertical = true;
+                }
 
-            xPlayer = velocityPlayer*horizontalDirection;
-            yPlayer = 0;
-                
+                xPlayer = velocityPlayer * horizontalDirection;
+                yPlayer = 0;
+            }
+            else
+            {
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    verticalDirection = 1;
+                    isVertical = true;
+                }
+                else if (Input.GetAxis("Vertical") < 0)
+                {
+                    verticalDirection = -1;
+                    isVertical = true;
+                }
+
+                xPlayer = velocityPlayer * horizontalDirection;
+                yPlayer = 0;
+            }
         }
 
         changeDirection();
-            
+
         this.transform.position += new Vector3(xPlayer, yPlayer, 0);
         playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
-        
+
     }
 
-    void changeDirection ()
+    void changeDirection()
     {
         if (isVertical != oldIsVertical)
         {
@@ -100,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         oldVerticalDirection = verticalDirection;
     }
 
-    void rotationSprite ()
+    void rotationSprite()
     {
         float z = 0;
 
@@ -155,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        this.transform.Rotate(0, 0, z);          
+        this.transform.Rotate(0, 0, z);
     }
 
     public void resetPosition()
