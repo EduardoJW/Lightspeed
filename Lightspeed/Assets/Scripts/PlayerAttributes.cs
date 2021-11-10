@@ -17,15 +17,16 @@ public class PlayerAttributes : MonoBehaviour
         
     }
 
-    void addPoint ()
+    public void addPoint ()
     {
         points++;
         Debug.Log("Player points: " + points);
     }
 
-    void addPowerUp (GameObject power)
+    public void addPowerUp (GameObject power)
     {
         powerUp = power;
+        Debug.Log("Player " + this.GetComponent<PlayerMovement>().playerIndex + " : got Power-up");
     }
 
     public void removeLife ()
