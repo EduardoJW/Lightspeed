@@ -32,7 +32,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         lifes--;
 
-        Debug.Log("Player " + this.GetComponent<PlayerMovement>().playerIndex + " : lifes: " + lifes);
+        Debug.Log("Player " + (this.GetComponent<PlayerMovement>().playerIndex + 1) + " : lifes: " + lifes);
 
         if (lifes == 0)
         {

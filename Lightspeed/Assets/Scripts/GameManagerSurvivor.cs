@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerSurvivor : MonoBehaviour
 {
     public GameObject player1;
     public GameObject player2;
     public GameObject floorTile;
+    public GameObject endGamePanel;
+    public Text result;
     public int numberOfLifes = 3;
     public int numberOfPlayers = 2;
 
-    private GameObject[] players;
+    private List<GameObject> players = new List<GameObject>();
 
     private Transform transformBase;
+
+    private int lastAliveIndex;
+    private List<int> deadsIndex = new List<int>();
 
 
     // Start is called before the first frame update
@@ -20,9 +26,10 @@ public class GameManagerSurvivor : MonoBehaviour
     {
         floor();
 
-        players = new GameObject[2] {player1, player2};
+        players.Add(player1);
+        players.Add(player2);
 
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerMovement>().playerIndex = i;
             players[i].GetComponent<PlayerAttributes>().lifes = numberOfLifes;
@@ -31,9 +38,24 @@ public class GameManagerSurvivor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        verifyLifes();
         
+    }
+
+    void endGame() 
+    {
+        int position = 2;
+        result.text = "1. Player " + (lastAliveIndex + 1) + "\n";
+
+        for (int i = deadsIndex.Count; i > 0; i--)
+        {
+            result.text += position + ". Player " + (deadsIndex[i-1] + 1) + "\n";
+            position++;
+        }
+
+        endGamePanel.SetActive(true);
     }
 
     void floor() 
@@ -79,6 +101,33 @@ public class GameManagerSurvivor : MonoBehaviour
                 tile.transform.position += new Vector3(i, j, 0);
                 tile.transform.SetParent(ground.GetComponent<Transform>());
             }
+        }
+
+    }
+
+    void verifyLifes () 
+    {
+        int alive = 0;
+
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (players[i].GetComponent<PlayerAttributes>().lifes > 0)
+            {
+                alive++;
+                lastAliveIndex = i;
+            }
+            else 
+            {
+                if (!deadsIndex.Contains(i))
+                {
+                    deadsIndex.Add(i);
+                }
+            }
+        }
+
+        if (alive == 1)
+        {
+            endGame();
         }
 
     }
