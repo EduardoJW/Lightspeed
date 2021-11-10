@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class GameManagerSurvivor : MonoBehaviour
 {
+    public GameObject player1;
+    public GameObject player2;
     public GameObject floorTile;
+    public int numberOfLifes = 3;
+    public int numberOfPlayers = 2;
+
+    private GameObject[] players;
 
     private Transform transformBase;
 
@@ -13,6 +19,14 @@ public class GameManagerSurvivor : MonoBehaviour
     void Start()
     {
         floor();
+
+        players = new GameObject[2] {player1, player2};
+
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            players[i].GetComponent<PlayerMovement>().playerIndex = i;
+            players[i].GetComponent<PlayerAttributes>().lifes = numberOfLifes;
+        }
         
     }
 

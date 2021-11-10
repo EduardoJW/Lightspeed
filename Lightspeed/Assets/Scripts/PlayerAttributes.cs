@@ -9,29 +9,12 @@ public class PlayerAttributes : MonoBehaviour
 
     [HideInInspector] public GameObject powerUp;
 
-    int count = 0;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        lifes = 3;
         points = 0;
         
-    }
-
-    // Debug
-    void FixedUpdate() {
-
-        if (count > 100)
-        {
-            addPoint();
-            count = 0;
-        } 
-        else
-        {
-            count++;
-        }       
     }
 
     void addPoint ()
@@ -49,7 +32,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         lifes--;
 
-        Debug.Log("Player lifes: " + lifes);
+        Debug.Log("Player " + this.GetComponent<PlayerMovement>().playerIndex + " : lifes: " + lifes);
 
         if (lifes == 0)
         {
