@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class GameManagerSurvivor : MonoBehaviour
 {
+    public GameObject player;
     public GameObject floorTile;
+    public int playerLifes = 3;
+    public int numberOfPlayers = 2;
 
     private Transform transformBase;
-
+    private GameObject[] players;
 
     // Start is called before the first frame update
     void Start()
     {
         floor();
+
+        players = new GameObject[numberOfPlayers];
+
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            players[i] = Instantiate(player, transformBase);
+            players[i].GetComponent<PlayerMovement>().playerIndex = i;
+        }
         
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
     }

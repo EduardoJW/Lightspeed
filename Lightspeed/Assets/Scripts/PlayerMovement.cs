@@ -8,7 +8,10 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public int horizontalDirection;
     [HideInInspector] public int verticalDirection;
     [HideInInspector] public bool isVertical;
-    public bool isPlayer2;
+    [HideInInspector] public int playerIndex;
+
+    private string[] horizontalControlNames = new string[4] {"Horizontal_P1", "Horizontal_P2", "Horizontal_P3", "Horizontal_P4"};
+    private string[] verticalControlNames = new string[4] {"Vertical_P1", "Vertical_P2", "Vertical_P3", "Vertical_P4"};
 
     private float dt;
     private float velocityPlayer;
@@ -22,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private int oldHorizontalDirection = 1;
     private int oldVerticalDirection = 1;
 
+    private Vector3[] startingPositions = new Vector3[4] {new Vector3(-3, 3, 0), new Vector3(-3, -3, 0), new Vector3(3, 3, 0), new Vector3(3, -3, 0)};
     private Vector3 startingPosition;
 
 
@@ -37,7 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
         playerPath = new List<Vector3>();
 
-        startingPosition = this.transform.position;
+        startingPosition = startingPositions[playerIndex];
+        this.transform.position = startingPosition;
     }
 
     // Update is called once per frame
@@ -49,73 +54,35 @@ public class PlayerMovement : MonoBehaviour
 
         if (isVertical)
         {
-            if (isPlayer2)
+            if (Input.GetAxis(horizontalControlNames[playerIndex]) > 0)
             {
-                if (Input.GetAxis("Horizontal_P2") > 0)
-                {
-                    horizontalDirection = 1;
-                    isVertical = false;
-                }
-                else if (Input.GetAxis("Horizontal_P2") < 0)
-                {
-                    horizontalDirection = -1;
-                    isVertical = false;
-                }
-
-                xPlayer = 0;
-                yPlayer = velocityPlayer * verticalDirection;
+                horizontalDirection = 1;
+                isVertical = false;
             }
-            else
+            else if (Input.GetAxis(horizontalControlNames[playerIndex]) < 0)
             {
-                if (Input.GetAxis("Horizontal") > 0)
-                {
-                    horizontalDirection = 1;
-                    isVertical = false;
-                }
-                else if (Input.GetAxis("Horizontal") < 0)
-                {
-                    horizontalDirection = -1;
-                    isVertical = false;
-                }
-
-                xPlayer = 0;
-                yPlayer = velocityPlayer * verticalDirection;
+                horizontalDirection = -1;
+                isVertical = false;
             }
+
+            xPlayer = 0;
+            yPlayer = velocityPlayer * verticalDirection;
         }
         else
         {
-            if (isPlayer2)
+            if (Input.GetAxis(verticalControlNames[playerIndex]) > 0)
             {
-                if (Input.GetAxis("Vertical_P2") > 0)
-                {
-                    verticalDirection = 1;
-                    isVertical = true;
-                }
-                else if (Input.GetAxis("Vertical_P2") < 0)
-                {
-                    verticalDirection = -1;
-                    isVertical = true;
-                }
-
-                xPlayer = velocityPlayer * horizontalDirection;
-                yPlayer = 0;
+                verticalDirection = 1;
+                isVertical = true;
             }
-            else
+            else if (Input.GetAxis(verticalControlNames[playerIndex]) < 0)
             {
-                if (Input.GetAxis("Vertical") > 0)
-                {
-                    verticalDirection = 1;
-                    isVertical = true;
-                }
-                else if (Input.GetAxis("Vertical") < 0)
-                {
-                    verticalDirection = -1;
-                    isVertical = true;
-                }
-
-                xPlayer = velocityPlayer * horizontalDirection;
-                yPlayer = 0;
+                verticalDirection = -1;
+                isVertical = true;
             }
+
+            xPlayer = velocityPlayer * horizontalDirection;
+            yPlayer = 0;
         }
 
         changeDirection();
@@ -197,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void resetPosition()
     {
-        this.transform.position = startingPosition;
         Start();
     }
 }
