@@ -74,15 +74,18 @@ public class Wall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
+        if (collision.gameObject.tag != "ItemBox")
         {
-            playerAttributes.removeLife();
-            for (int i = walls.Count - 1; i >= 0; i--)
+            if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
             {
-                Destroy(walls[i].gameObject);
-                walls.Remove(walls[i]);
+                playerAttributes.removeLife();
+                for (int i = walls.Count - 1; i >= 0; i--)
+                {
+                    Destroy(walls[i].gameObject);
+                    walls.Remove(walls[i]);
+                }
+                playerScript.resetPosition();
             }
-            playerScript.resetPosition();
         }
     }
 }
