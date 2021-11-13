@@ -27,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
  
     private Vector3[] startingPositions = new Vector3[4] {new Vector3(-3, 3, 0), new Vector3(-3, -3, 0), new Vector3(3, 3, 0), new Vector3(3, -3, 0)};
     private Vector3 startingPosition;
+
+    private bool[] isAxisInUse = new bool[4] {false, false, false, false};
+
+    public bool enable = false;
  
  
     // Start is called before the first frame update
@@ -48,48 +52,67 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        dt = Time.deltaTime;
- 
-        velocityPlayer = velocities[velocityIndex] * dt;
- 
-        if (isVertical)
+        if (enable) 
         {
-            if (Input.GetAxis(horizontalControlNames[playerIndex]) > 0)
-            {
-                horizontalDirection = 1;
-                isVertical = false;
-            }
-            else if (Input.GetAxis(horizontalControlNames[playerIndex]) < 0)
-            {
-                horizontalDirection = -1;
-                isVertical = false;
-            }
+            dt = Time.deltaTime;
  
-            xPlayer = 0;
-            yPlayer = velocityPlayer * verticalDirection;
-        }
-        else
+            velocityPlayer = velocities[velocityIndex] * dt;
+    
+            if (isVertical)
+            {
+                if (Input.GetAxis(horizontalControlNames[playerIndex]) > 0)
+                {
+                    horizontalDirection = 1;
+                    isVertical = false;
+                    isAxisInUse[playerIndex] = true;
+                }
+                else if (Input.GetAxis(horizontalControlNames[playerIndex]) < 0)
+                {
+                    horizontalDirection = -1;
+                    isVertical = false;
+                    isAxisInUse[playerIndex] = true;
+                }
+                else
+                {
+                    isAxisInUse[playerIndex] = false;
+                }
+    
+                xPlayer = 0;
+                yPlayer = velocityPlayer * verticalDirection;
+            }
+            else
+            {
+                if (Input.GetAxis(verticalControlNames[playerIndex]) > 0)
+                {
+                    verticalDirection = 1;
+                    isVertical = true;
+                    isAxisInUse[playerIndex] = true;
+                }
+                else if (Input.GetAxis(verticalControlNames[playerIndex]) < 0)
+                {
+                    verticalDirection = -1;
+                    isVertical = true;
+                    isAxisInUse[playerIndex] = true;
+                }
+                else
+                {
+                    isAxisInUse[playerIndex] = false;
+                }
+    
+                xPlayer = velocityPlayer * horizontalDirection;
+                yPlayer = 0;
+            }
+    
+            changeDirection();
+    
+            this.transform.position += new Vector3(xPlayer, yPlayer, 0);
+            playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
+
+        } 
+        else 
         {
-            if (Input.GetAxis(verticalControlNames[playerIndex]) > 0)
-            {
-                verticalDirection = 1;
-                isVertical = true;
-            }
-            else if (Input.GetAxis(verticalControlNames[playerIndex]) < 0)
-            {
-                verticalDirection = -1;
-                isVertical = true;
-            }
- 
-            xPlayer = velocityPlayer * horizontalDirection;
-            yPlayer = 0;
+            this.transform.position = new Vector3(0, -100, 0);
         }
- 
-        changeDirection();
- 
-        this.transform.position += new Vector3(xPlayer, yPlayer, 0);
-        playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
- 
     }
  
     void changeDirection()

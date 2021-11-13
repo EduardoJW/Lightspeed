@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class GameManagerSurvivor : MonoBehaviour
 {
-    public GameObject player1;
-    public GameObject player2;
+    public GameObject[] players;
     public GameObject floorTile;
     public GameObject endGamePanel;
     public Text result;
     public int numberOfLifes = 3;
     public int numberOfPlayers = 2;
-
-    private List<GameObject> players = new List<GameObject>();
 
     private Transform transformBase;
 
@@ -26,12 +23,10 @@ public class GameManagerSurvivor : MonoBehaviour
     {
         floor();
 
-        players.Add(player1);
-        players.Add(player2);
-
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             players[i].GetComponent<PlayerMovement>().playerIndex = i;
+            players[i].GetComponent<PlayerMovement>().enable = true;
             players[i].GetComponent<PlayerAttributes>().lifes = numberOfLifes;
         }
         
