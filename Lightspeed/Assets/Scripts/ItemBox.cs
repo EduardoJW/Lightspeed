@@ -6,10 +6,10 @@ public class ItemBox : MonoBehaviour
 {
 
     private PlayerAttributes playerAttributes;
-    public GameObject Item0Prefab;
+    public GameObject ItemGhost;
     public GameObject Item1Prefab;
     public GameObject Item2Prefab;
-    int numPowerUps = 3;
+    int numPowerUps = 0; //3
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class ItemBox : MonoBehaviour
         switch (itemIndex)
         {
             case 0:
-                obj = Instantiate(Item0Prefab);
+                obj = Instantiate(ItemGhost);
                 break;
             case 1:
                 obj = Instantiate(Item1Prefab);

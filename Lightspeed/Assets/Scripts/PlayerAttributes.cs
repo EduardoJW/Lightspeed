@@ -7,16 +7,66 @@ public class PlayerAttributes : MonoBehaviour
     [HideInInspector] public int lifes;
     [HideInInspector] public int points;
 
-    [HideInInspector] public GameObject powerUp;
+    public GameObject powerUp = null;
+	
+	public int playerNumber;
+	
+	public bool isGhost = false;
+	public float ghostTimer = 0.0f;
+	public float ghostSpeed;
+	public float ghostCooldown;
+	public bool hasItem = true;
+	
+	public GameObject SpriteObject;
+	public Renderer Sprite;
 
+	//Wall wallScript;
 
     // Start is called before the first frame update
     void Start()
     {
+		Sprite = SpriteObject.GetComponent<Renderer>();
         points = 0;
+		
+		ghostSpeed = 20.0f;
+		ghostCooldown = 100.0f;
+		
+		//activateGhost();
         
     }
+	
+	void FixedUpdate(){
+		
+		float dt = Time.deltaTime;
+		if (isGhost == true) {
+			ghostTimer = ghostTimer + ghostSpeed * dt;
+			if (ghostTimer > ghostCooldown) {
+				deactivateGhost();
+			}
+			
+		}
+		
+	}
+	public void deactivateGhost(){
+		ghostTimer = 0;
+		isGhost = false;
+		var tempColor = Sprite.material.color;
+		tempColor.a = 1f;
+		Sprite.material.color = tempColor;
+		this.GetComponent<Wall>().deactivateGhost();
+		powerUp = null;
+	}
+	public void activateGhost(){
+		isGhost = true;
+		ghostTimer = 0;
 
+		var tempColor = Sprite.material.color;
+		tempColor.a = 0.3f;
+		Sprite.material.color = tempColor;
+		
+		this.GetComponent<Wall>().activateGhost();
+	
+	}	
     public void addPoint ()
     {
         points++;

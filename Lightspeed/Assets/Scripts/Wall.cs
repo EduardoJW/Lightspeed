@@ -5,6 +5,7 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     public GameObject wallPrefab;
+	
 
     private int wallSize = 20;
     private float dt;
@@ -15,6 +16,10 @@ public class Wall : MonoBehaviour
     private int indexPath;
     private int velocityIndex;
     private bool[] isHorizontal;
+	
+
+	private GameObject wall;
+	public Renderer Sprite;
 
     PlayerMovement playerScript;
     PlayerAttributes playerAttributes;
@@ -24,10 +29,38 @@ public class Wall : MonoBehaviour
 
     private void growWall()
     {
-        GameObject wall = Instantiate(this.wallPrefab);
+		//wall Object
+        wall = Instantiate(this.wallPrefab);
+		if (this.GetComponent<PlayerAttributes>().isGhost == true) {
+			
+			wall.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
+			wall.tag = "WallGhost";
+			
+		} 
+		else {
+			wall.tag = "Wall";
+		}
+	
+		
+		//WallList
         walls.Add(wall.transform);
     }
-
+	public void activateGhost(){
+		
+		for (int i = 0; i < walls.Count; i++)
+        {
+            walls[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
+            walls[i].tag = "WallGhost";
+        }
+		
+	}
+	public void deactivateGhost(){
+		for (int i = 0; i < walls.Count; i++)
+        {
+            walls[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            walls[i].tag = "Wall";
+        }
+	}
     private void updateWall(float dt)
     {
         path = playerScript.playerPath;
@@ -74,7 +107,7 @@ public class Wall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "ItemBox")
+        if (collision.gameObject.tag != "ItemBox" && collision.gameObject.tag != "WallGhost" && this.GetComponent<PlayerAttributes>().isGhost == false)
         {
             if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
             {
