@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    [HideInInspector] public int lifes;
+    public int lifes;
     [HideInInspector] public int points;
 
     public GameObject powerUp = null;
@@ -20,7 +20,21 @@ public class PlayerAttributes : MonoBehaviour
 	public GameObject SpriteObject;
 	public Renderer Sprite;
 
-	//Wall wallScript;
+    public GameObject[] hearts;
+
+    void Update()
+    {
+        if(lifes < 1)
+        {
+            Destroy(hearts[0].gameObject);
+        } else if (lifes < 2)
+        {
+            Destroy(hearts[1].gameObject);
+        } else if (lifes < 3)
+        {
+            Destroy(hearts[2].gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
