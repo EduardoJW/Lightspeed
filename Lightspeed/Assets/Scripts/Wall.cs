@@ -5,7 +5,8 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     public GameObject wallPrefab;
-	
+    public Sprite spriteWall;
+
 
     private int wallSize = 20;
     private float dt;
@@ -16,10 +17,11 @@ public class Wall : MonoBehaviour
     private int indexPath;
     private int velocityIndex;
     private bool[] isHorizontal;
-	
+    private SpriteRenderer spriteRenderer;
 
-	private GameObject wall;
-	public Renderer Sprite;
+
+    private GameObject wall;
+    public Renderer Sprite;
 
     PlayerMovement playerScript;
     PlayerAttributes playerAttributes;
@@ -29,38 +31,44 @@ public class Wall : MonoBehaviour
 
     private void growWall()
     {
-		//wall Object
+        //wall Object
         wall = Instantiate(this.wallPrefab);
-		if (this.GetComponent<PlayerAttributes>().isGhost == true) {
-			
-			wall.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
-			wall.tag = "WallGhost";
-			
-		} 
-		else {
-			wall.tag = "Wall";
-		}
-	
-		
-		//WallList
+        spriteRenderer = wall.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = spriteWall;
+        if (this.GetComponent<PlayerAttributes>().isGhost == true)
+        {
+
+            wall.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
+            wall.tag = "WallGhost";
+
+        }
+        else
+        {
+            wall.tag = "Wall";
+        }
+
+
+        //WallList
         walls.Add(wall.transform);
     }
-	public void activateGhost(){
-		
-		for (int i = 0; i < walls.Count; i++)
+    public void activateGhost()
+    {
+
+        for (int i = 0; i < walls.Count; i++)
         {
             walls[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
             walls[i].tag = "WallGhost";
         }
-		
-	}
-	public void deactivateGhost(){
-		for (int i = 0; i < walls.Count; i++)
+
+    }
+    public void deactivateGhost()
+    {
+        for (int i = 0; i < walls.Count; i++)
         {
             walls[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             walls[i].tag = "Wall";
         }
-	}
+    }
     private void updateWall(float dt)
     {
         path = playerScript.playerPath;
