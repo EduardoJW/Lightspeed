@@ -51,8 +51,14 @@ public class PlayerMovement : MonoBehaviour
  
     // Update is called once per frame
 	void Update() {
+
+        if ( Input.GetKeyDown(KeyCode.X) && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)" && playerIndex == 0) {
+			
+			this.GetComponent<PlayerAttributes>().activateGhost();
+
+		}
 		
-		if ( Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)" && this.GetComponent<PlayerAttributes>().playerNumber == 1) {
+		if ( Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)" && playerIndex == 1) {
 			
 			this.GetComponent<PlayerAttributes>().activateGhost();
 
@@ -61,9 +67,6 @@ public class PlayerMovement : MonoBehaviour
 	}
     void FixedUpdate()
     {
-		
-		
-		
         if (enable) 
         {
             dt = Time.deltaTime;

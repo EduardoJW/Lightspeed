@@ -9,7 +9,7 @@ public class GameManagerSurvivor : MonoBehaviour
     public GameObject floorTile;
     public GameObject endGamePanel;
     public Text result;
-    public int numberOfLifes = 3;
+    public int numberOfLives = 3;
     public int numberOfPlayers = 2;
 
     private Transform transformBase;
@@ -25,9 +25,8 @@ public class GameManagerSurvivor : MonoBehaviour
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            players[i].GetComponent<PlayerMovement>().playerIndex = i;
             players[i].GetComponent<PlayerMovement>().enable = true;
-            players[i].GetComponent<PlayerAttributes>().lifes = numberOfLifes;
+            players[i].GetComponent<PlayerAttributes>().lives = numberOfLives;
         }
         
     }
@@ -35,7 +34,7 @@ public class GameManagerSurvivor : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        verifyLifes();
+        verifyLives();
         
     }
 
@@ -100,13 +99,13 @@ public class GameManagerSurvivor : MonoBehaviour
 
     }
 
-    void verifyLifes () 
+    void verifyLives () 
     {
         int alive = 0;
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if (players[i].GetComponent<PlayerAttributes>().lifes > 0)
+            if (players[i].GetComponent<PlayerAttributes>().lives > 0)
             {
                 alive++;
                 lastAliveIndex = i;

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    public int lifes;
+    public int lives;
     [HideInInspector] public int points;
 
     public GameObject powerUp = null;
-	
-	public int playerNumber;
 	
 	public bool isGhost = false;
 	public float ghostTimer = 0.0f;
@@ -21,20 +19,6 @@ public class PlayerAttributes : MonoBehaviour
 	public Renderer Sprite;
 
     public GameObject[] hearts;
-
-    void Update()
-    {
-        if(lifes < 1)
-        {
-            Destroy(hearts[0].gameObject);
-        } else if (lifes < 2)
-        {
-            Destroy(hearts[1].gameObject);
-        } else if (lifes < 3)
-        {
-            Destroy(hearts[2].gameObject);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +41,6 @@ public class PlayerAttributes : MonoBehaviour
 			if (ghostTimer > ghostCooldown) {
 				deactivateGhost();
 			}
-			
 		}
 		
 	}
@@ -95,11 +78,13 @@ public class PlayerAttributes : MonoBehaviour
 
     public void removeLife ()
     {
-        lifes--;
+        lives--;
 
-        Debug.Log("Player " + (this.GetComponent<PlayerMovement>().playerIndex + 1) + " : lifes: " + lifes);
+        Debug.Log("Player " + (this.GetComponent<PlayerMovement>().playerIndex + 1) + " : lives: " + lives);
 
-        if (lifes == 0)
+        Destroy(hearts[lives].gameObject);
+
+        if (lives == 0)
         {
             this.gameObject.SetActive(false);
         }
