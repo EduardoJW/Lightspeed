@@ -7,6 +7,7 @@ TagManager:
   - ItemBox
   - Wall
   - WallGhost
+  - OuterBarrier
   layers:
   - Default
   - TransparentFX
