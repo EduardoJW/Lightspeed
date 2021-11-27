@@ -676,6 +676,7 @@ MonoBehaviour:
   - {fileID: 1209225298}
   - {fileID: 1468607975}
   floorTile: {fileID: 8896368480624992510, guid: fce1800457d5ce8419ea5f75153b556a, type: 3}
+  barrier: {fileID: 4072281553709300593, guid: 891f0e7a3456a2d48a928a55310627f5, type: 3}
   endGamePanel: {fileID: 1496926552}
   result: {fileID: 1073214701}
   numberOfLives: 3

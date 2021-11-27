@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
  
     private string[] horizontalControlNames = new string[4] {"Horizontal_P1", "Horizontal_P2", "Horizontal_P3", "Horizontal_P4"};
     private string[] verticalControlNames = new string[4] {"Vertical_P1", "Vertical_P2", "Vertical_P3", "Vertical_P4"};
+    private string[] powerUpControlNames = new string[4] {"PowerUp_P1", "PowerUp_P2", "PowerUp_P3", "PowerUp_P4"};
  
     private float dt;
     private float velocityPlayer;
@@ -31,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private bool[] isAxisInUse = new bool[4] {false, false, false, false};
 
     public bool enable = false;
+
+    [HideInInspector] public bool powerUpActive = false;
  
  
     // Start is called before the first frame update
@@ -48,23 +51,7 @@ public class PlayerMovement : MonoBehaviour
         startingPosition = startingPositions[playerIndex];
         this.transform.position = startingPosition;
     }
- 
-    // Update is called once per frame
-	void Update() {
 
-        if ( Input.GetKeyDown(KeyCode.X) && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)" && playerIndex == 0) {
-			
-			this.GetComponent<PlayerAttributes>().activateGhost();
-
-		}
-		
-		if ( Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)" && playerIndex == 1) {
-			
-			this.GetComponent<PlayerAttributes>().activateGhost();
-
-		}
-		
-	}
     void FixedUpdate()
     {
         if (enable) 
@@ -122,6 +109,12 @@ public class PlayerMovement : MonoBehaviour
     
             this.transform.position += new Vector3(xPlayer, yPlayer, 0);
             playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
+
+            if (!powerUpActive && Input.GetAxis(powerUpControlNames[playerIndex]) > 0 && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)")
+            {
+                this.GetComponent<PlayerAttributes>().activateGhost();
+                powerUpActive = true;
+            }
 
         } 
         else 

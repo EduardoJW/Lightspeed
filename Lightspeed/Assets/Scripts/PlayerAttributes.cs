@@ -52,6 +52,7 @@ public class PlayerAttributes : MonoBehaviour
 		Sprite.material.color = tempColor;
 		this.GetComponent<Wall>().deactivateGhost();
 		powerUp = null;
+		this.GetComponent<PlayerMovement>().powerUpActive = false;
 	}
 	public void activateGhost(){
 		isGhost = true;
