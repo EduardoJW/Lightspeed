@@ -44,7 +44,10 @@ public class GameManagerSurvivor : MonoBehaviour
     void endGame() 
     {
         int position = 2;
-        result.text = "1. Player " + (lastAliveIndex + 1) + "\n";
+        if (deadsIndex.Count == numberOfPlayers)
+            position = 1;
+        else
+            result.text = "1. Player " + (lastAliveIndex + 1) + "\n";
 
         for (int i = deadsIndex.Count; i > 0; i--)
         {
@@ -149,8 +152,9 @@ public class GameManagerSurvivor : MonoBehaviour
             }
         }
 
-        if (alive == 1)
+        if (alive <= 1)
         {
+            Time.timeScale = 0;
             endGame();
         }
 
