@@ -107,7 +107,7 @@ public class Wall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "ItemBox" && collision.gameObject.tag != "WallGhost" && this.GetComponent<PlayerAttributes>().isGhost == false)
+        if (collision.gameObject.tag != "ItemBox" && collision.gameObject.tag != "WallGhost" && (this.GetComponent<PlayerAttributes>().isGhost == false || collision.gameObject.tag == "OuterBarrier"))
         {
             if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
             {

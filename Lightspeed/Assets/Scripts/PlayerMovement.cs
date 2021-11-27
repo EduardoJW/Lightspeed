@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private int oldHorizontalDirection = 1;
     private int oldVerticalDirection = 1;
  
-    private Vector3[] startingPositions = new Vector3[4] {new Vector3(-3, 3, 0), new Vector3(-3, -3, 0), new Vector3(3, 3, 0), new Vector3(3, -3, 0)};
+    private Vector3[] startingPositions = new Vector3[4] {new Vector3(-3, 2, 0), new Vector3(-3, -2, 0), new Vector3(3, 2, 0), new Vector3(3, -2, 0)};
     private Vector3 startingPosition;
 
     private bool[] isAxisInUse = new bool[4] {false, false, false, false};
