@@ -36,6 +36,7 @@ public class ItemBox : MonoBehaviour
         playerAttributes = collision.gameObject.GetComponent<PlayerAttributes>();
         if (collision.gameObject.tag == "Player")
         {
+            FindObjectOfType<AudioManager>().Play("Get_Power_Up");
             GameObject power;
             power = createPowerUp();
             playerAttributes.addPowerUp(power);

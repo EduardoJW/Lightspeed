@@ -117,6 +117,7 @@ public class Wall : MonoBehaviour
         {
             if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
             {
+                FindObjectOfType<AudioManager>().Play("Collision");
                 playerAttributes.removeLife();
                 for (int i = walls.Count - 1; i >= 0; i--)
                 {
