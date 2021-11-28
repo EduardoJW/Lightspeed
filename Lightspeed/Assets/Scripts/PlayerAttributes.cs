@@ -13,58 +13,85 @@ public class PlayerAttributes : MonoBehaviour
 	public float ghostTimer = 0.0f;
 	public float ghostSpeed;
 	public float ghostCooldown;
-	public bool hasItem = true;
+
+	// 0: Ghost; 1: Boost
+	[HideInInspector] public bool[] powerUpActive = new bool[2] {false, false};
+	private float[] powerUpTimer = new float[2] {0.0f, 0.0f};
+	private float[] powerUpSpeed = new float[2] {20.0f, 20.0f};
+	private float[] powerUpCooldown = new float[2] {100.0f, 100.0f};
+	private int powerUpIndex = 0;
 	
 	public GameObject SpriteObject;
 	public Renderer Sprite;
 
     public GameObject[] hearts;
 
+	private string[] powerUpControlNames = new string[4] {"PowerUp_P1", "PowerUp_P2", "PowerUp_P3", "PowerUp_P4"};
+
     // Start is called before the first frame update
     void Start()
     {
 		Sprite = SpriteObject.GetComponent<Renderer>();
-        points = 0;
-		
-		ghostSpeed = 20.0f;
-		ghostCooldown = 100.0f;
-		
-		//activateGhost();
-        
+        points = 0;   
     }
 	
 	void FixedUpdate(){
 		
 		float dt = Time.deltaTime;
-		if (isGhost == true) {
-			ghostTimer = ghostTimer + ghostSpeed * dt;
-			if (ghostTimer > ghostCooldown) {
-				deactivateGhost();
+
+		if (powerUpActive[powerUpIndex] == true) 
+		{
+			powerUpTimer[powerUpIndex] = powerUpTimer[powerUpIndex] + powerUpSpeed[powerUpIndex] * dt;
+
+			if (powerUpTimer[powerUpIndex] > powerUpCooldown[powerUpIndex]) 
+			{
+				powerUpTimer[powerUpIndex] = 0;
+				powerUpActive[powerUpIndex] = false;
+				powerUp = null;
+
+				switch (powerUpIndex)
+				{
+					case 0:
+						deactivateGhost();
+						break;
+					case 1:
+						deactivateBoost();
+						break;
+				}				
 			}
 		}
-		
-	}
-	public void deactivateGhost(){
-		ghostTimer = 0;
-		isGhost = false;
-		var tempColor = Sprite.material.color;
-		tempColor.a = 1f;
-		Sprite.material.color = tempColor;
-		this.GetComponent<Wall>().deactivateGhost();
-		powerUp = null;
-		this.GetComponent<PlayerMovement>().powerUpActive = false;
-	}
-	public void activateGhost(){
-		isGhost = true;
-		ghostTimer = 0;
 
+		verifyPowerUpActivation();
+	}
+
+	public void activateGhost()
+	{
 		var tempColor = Sprite.material.color;
 		tempColor.a = 0.3f;
 		Sprite.material.color = tempColor;
 		
-		this.GetComponent<Wall>().activateGhost();
-	
+		this.GetComponent<Wall>().activateGhost();	
 	}	
+
+	public void deactivateGhost()
+	{
+		var tempColor = Sprite.material.color;
+		tempColor.a = 1f;
+		Sprite.material.color = tempColor;
+
+		this.GetComponent<Wall>().deactivateGhost();
+	}
+
+	public void activateBoost()
+	{
+		this.GetComponent<PlayerMovement>().velocityIndex++; 
+	}	
+
+	public void deactivateBoost()
+	{
+		this.GetComponent<PlayerMovement>().velocityIndex = 0; 
+	}
+
     public void addPoint ()
     {
         points++;
@@ -90,4 +117,37 @@ public class PlayerAttributes : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
+
+	bool isPowerUpActive ()
+	{
+		for (int i = 0; i < powerUpActive.Length; i++)
+		{
+			if (powerUpActive[i]) 
+			{
+				return true;
+			}
+		} 
+
+		return false;
+	}
+
+	void verifyPowerUpActivation() 
+	{
+		if (!isPowerUpActive() && Input.GetAxis(powerUpControlNames[this.GetComponent<PlayerMovement>().playerIndex]) > 0 && powerUp != null)
+        {
+			if (powerUp.name == "ItemGhost(Clone)")
+			{
+                activateGhost();
+				powerUpIndex = 0;
+			}
+			else if (powerUp.name == "ItemBoost(Clone)")
+			{
+				activateBoost();
+				powerUpIndex = 1;
+			}
+
+			powerUpActive[powerUpIndex] = true;
+			powerUpTimer[powerUpIndex] = 0.0f;
+        }
+	}
 }

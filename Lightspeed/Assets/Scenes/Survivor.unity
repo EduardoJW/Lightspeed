@@ -664,7 +664,7 @@ MonoBehaviour:
   endGamePanel: {fileID: 1496926552}
   result: {fileID: 1073214701}
   numberOfLives: 3
-  numberOfPlayers: 4
+  numberOfPlayers: 2
 --- !u!4 &860799611
 Transform:
   m_ObjectHideFlags: 0

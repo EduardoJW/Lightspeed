@@ -35,12 +35,10 @@ public class Wall : MonoBehaviour
         wall = Instantiate(this.wallPrefab);
         spriteRenderer = wall.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = spriteWall;
-        if (this.GetComponent<PlayerAttributes>().isGhost == true)
+        if (this.GetComponent<PlayerAttributes>().powerUpActive[0] == true)
         {
-
             wall.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.3f);
             wall.tag = "WallGhost";
-
         }
         else
         {
@@ -98,9 +96,8 @@ public class Wall : MonoBehaviour
         playerScript = this.GetComponent<PlayerMovement>();
         playerAttributes = this.GetComponent<PlayerAttributes>();
 
-        velocities = new float[4] { 2.0f, 4.0f, 8.0f, 16.0f };
-        velocityFactors = new int[4] { 200, 300, 150, 50 };
-        velocityIndex = 0;
+        velocities = playerScript.velocities;
+        velocityFactors = new int[4] { 200, 100, 150, 50 };
         isHorizontal = new bool[wallSize];
 
         walls = new List<Transform>();
@@ -109,13 +106,14 @@ public class Wall : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        velocityIndex = playerScript.velocityIndex;
         dt = Time.deltaTime;
         updateWall(dt);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != "ItemBox" && collision.gameObject.tag != "WallGhost" && (this.GetComponent<PlayerAttributes>().isGhost == false || collision.gameObject.tag == "OuterBarrier"))
+        if (collision.gameObject.tag != "ItemBox" && collision.gameObject.tag != "WallGhost" && (this.GetComponent<PlayerAttributes>().powerUpActive[0] == false || collision.gameObject.tag == "OuterBarrier"))
         {
             if (collision.gameObject != walls[0].gameObject && collision.gameObject != walls[1].gameObject && collision.gameObject != walls[2].gameObject)
             {

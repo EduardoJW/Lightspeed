@@ -12,12 +12,11 @@ public class PlayerMovement : MonoBehaviour
  
     private string[] horizontalControlNames = new string[4] {"Horizontal_P1", "Horizontal_P2", "Horizontal_P3", "Horizontal_P4"};
     private string[] verticalControlNames = new string[4] {"Vertical_P1", "Vertical_P2", "Vertical_P3", "Vertical_P4"};
-    private string[] powerUpControlNames = new string[4] {"PowerUp_P1", "PowerUp_P2", "PowerUp_P3", "PowerUp_P4"};
  
     private float dt;
     private float velocityPlayer;
-    private float[] velocities;
-    private int velocityIndex;
+    [HideInInspector] public float[] velocities = new float[4] { 2.0f, 2.5f, 8.0f, 16.0f };
+    [HideInInspector] public int velocityIndex;
  
     private float xPlayer;
     private float yPlayer;
@@ -32,14 +31,11 @@ public class PlayerMovement : MonoBehaviour
     private bool[] isAxisInUse = new bool[4] {false, false, false, false};
 
     public bool enable = false;
-
-    [HideInInspector] public bool powerUpActive = false;
  
  
     // Start is called before the first frame update
     void Start()
     {
-        velocities = new float[1] { 2.0f };
         velocityIndex = 0;
         if (playerIndex < 2)
             horizontalDirection = 1;
@@ -111,13 +107,6 @@ public class PlayerMovement : MonoBehaviour
     
             this.transform.position += new Vector3(xPlayer, yPlayer, 0);
             playerPath.Add(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
-
-            if (!powerUpActive && Input.GetAxis(powerUpControlNames[playerIndex]) > 0 && this.GetComponent<PlayerAttributes>().powerUp != null && this.GetComponent<PlayerAttributes>().powerUp.name == "ItemGhost(Clone)")
-            {
-                this.GetComponent<PlayerAttributes>().activateGhost();
-                powerUpActive = true;
-            }
-
         } 
         else 
         {

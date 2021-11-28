@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7864784404446145080}
   m_Layer: 0
-  m_Name: Item1Prefab
+  m_Name: ItemBoost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

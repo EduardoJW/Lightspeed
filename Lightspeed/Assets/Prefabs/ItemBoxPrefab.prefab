@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemGhost: {fileID: 8321656259979091611, guid: a2e0a2c00003c644888e5fc47833c6d8, type: 3}
-  Item1Prefab: {fileID: 864692543302257484, guid: 9fd2e69087f67b14091ccebd983abeca, type: 3}
+  ItemBoost: {fileID: 864692543302257484, guid: 9fd2e69087f67b14091ccebd983abeca, type: 3}
   Item2Prefab: {fileID: 1084318901493554290, guid: 3cbecade386ce0d4f9d3830c71d133ea, type: 3}

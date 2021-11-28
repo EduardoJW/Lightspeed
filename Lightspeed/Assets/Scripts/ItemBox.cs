@@ -7,21 +7,9 @@ public class ItemBox : MonoBehaviour
 
     private PlayerAttributes playerAttributes;
     public GameObject ItemGhost;
-    public GameObject Item1Prefab;
+    public GameObject ItemBoost;
     public GameObject Item2Prefab;
-    int numPowerUps = 0; //3
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    private int numPowerUps = 2; 
 
     GameObject createPowerUp() //deve ser aumentada manualmente conforme a lista de powerups cresce
     {
@@ -34,7 +22,7 @@ public class ItemBox : MonoBehaviour
                 obj = Instantiate(ItemGhost);
                 break;
             case 1:
-                obj = Instantiate(Item1Prefab);
+                obj = Instantiate(ItemBoost);
                 break;
             case 2:
                 obj = Instantiate(Item2Prefab);
