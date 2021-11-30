@@ -5,6 +5,7 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     public GameObject wallPrefab;
+    public GameObject bananaPrefab;
     public Sprite spriteWall;
 
 
@@ -21,6 +22,7 @@ public class Wall : MonoBehaviour
 
 
     private GameObject wall;
+    private GameObject banana;
     public Renderer Sprite;
 
     PlayerMovement playerScript;
@@ -66,6 +68,18 @@ public class Wall : MonoBehaviour
             walls[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             walls[i].tag = "Wall";
         }
+    }
+
+    public void activateBanana()
+    {
+        banana = Instantiate(this.bananaPrefab);
+        banana.transform.position = walls[1].transform.position;
+        banana.transform.rotation = walls[1].transform.rotation;
+        banana.transform.RotateAround(walls[1].position, Vector3.forward, 90);
+    }
+    public void deactivateBanana()
+    {
+        Destroy(banana);
     }
     private void updateWall(float dt)
     {

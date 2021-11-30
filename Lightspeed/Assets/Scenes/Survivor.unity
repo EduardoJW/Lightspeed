@@ -364,6 +364,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBoxPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3267425869655757568, guid: aea1040620c815747b15f77d780020d1, type: 3}
+      propertyPath: ItemBanana
+      value: 
+      objectReference: {fileID: 3724278550855803343, guid: 89c864d9acabc474994646d902c5f800, type: 3}
     - target: {fileID: 5018833666811331722, guid: aea1040620c815747b15f77d780020d1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -860,6 +864,10 @@ PrefabInstance:
       propertyPath: spriteWall
       value: 
       objectReference: {fileID: 21300000, guid: 24fe8ac72fa08b6409c301e7d2dda34d, type: 3}
+    - target: {fileID: 716761822831437474, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
+      propertyPath: bananaPrefab
+      value: 
+      objectReference: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}
     - target: {fileID: 716761822831437475, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -1254,6 +1262,14 @@ PrefabInstance:
       propertyPath: spriteWall
       value: 
       objectReference: {fileID: 21300000, guid: b32ff0bb4bde33d40be7cf34594a64b9, type: 3}
+    - target: {fileID: 716761822831437474, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
+      propertyPath: wallPrefab
+      value: 
+      objectReference: {fileID: 6237648664904413564, guid: cc666412f324a2747a7a9d4474d72140, type: 3}
+    - target: {fileID: 716761822831437474, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
+      propertyPath: bananaPrefab
+      value: 
+      objectReference: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}
     - target: {fileID: 716761822831437475, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1401,6 +1417,10 @@ PrefabInstance:
       propertyPath: spriteWall
       value: 
       objectReference: {fileID: 21300000, guid: d111587fbeda8454bbf48d059c167df5, type: 3}
+    - target: {fileID: 716761822831437474, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
+      propertyPath: bananaPrefab
+      value: 
+      objectReference: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}
     - target: {fileID: 716761822831437475, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1977,6 +1997,10 @@ PrefabInstance:
       propertyPath: spriteWall
       value: 
       objectReference: {fileID: 21300000, guid: f39066df1f24d1d46899b2fa728144e0, type: 3}
+    - target: {fileID: 716761822831437474, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
+      propertyPath: bananaPrefab
+      value: 
+      objectReference: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}
     - target: {fileID: 716761822831437475, guid: 2b4670ec8c9c6f84b83f76499d4c66be, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -2271,6 +2295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBoxPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3267425869655757568, guid: aea1040620c815747b15f77d780020d1, type: 3}
+      propertyPath: ItemBanana
+      value: 
+      objectReference: {fileID: 3724278550855803343, guid: 89c864d9acabc474994646d902c5f800, type: 3}
     - target: {fileID: 5018833666811331722, guid: aea1040620c815747b15f77d780020d1, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2438,6 +2466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBoxPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3267425869655757568, guid: aea1040620c815747b15f77d780020d1, type: 3}
+      propertyPath: ItemBanana
+      value: 
+      objectReference: {fileID: 3724278550855803343, guid: 89c864d9acabc474994646d902c5f800, type: 3}
     - target: {fileID: 5018833666811331722, guid: aea1040620c815747b15f77d780020d1, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -8,8 +8,8 @@ public class ItemBox : MonoBehaviour
     private PlayerAttributes playerAttributes;
     public GameObject ItemGhost;
     public GameObject ItemBoost;
-    public GameObject Item2Prefab;
-    private int numPowerUps = 2; 
+    public GameObject ItemBanana;
+    private int numPowerUps = 3; 
 
     GameObject createPowerUp() //deve ser aumentada manualmente conforme a lista de powerups cresce
     {
@@ -25,7 +25,7 @@ public class ItemBox : MonoBehaviour
                 obj = Instantiate(ItemBoost);
                 break;
             case 2:
-                obj = Instantiate(Item2Prefab);
+                obj = Instantiate(ItemBanana);
                 break;
         }
         return obj;

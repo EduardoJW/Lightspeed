@@ -14,11 +14,11 @@ public class PlayerAttributes : MonoBehaviour
 	public float ghostSpeed;
 	public float ghostCooldown;
 
-	// 0: Ghost; 1: Boost
-	[HideInInspector] public bool[] powerUpActive = new bool[2] {false, false};
-	private float[] powerUpTimer = new float[2] {0.0f, 0.0f};
-	private float[] powerUpSpeed = new float[2] {20.0f, 20.0f};
-	private float[] powerUpCooldown = new float[2] {100.0f, 100.0f};
+	// 0: Ghost; 1: Boost; 2: Banana
+	[HideInInspector] public bool[] powerUpActive = new bool[3] { false, false, false };
+	private float[] powerUpTimer = new float[3] {0.0f, 0.0f, 0.0f };
+	private float[] powerUpSpeed = new float[3] {20.0f, 20.0f, 20.0f};
+	private float[] powerUpCooldown = new float[3] {100.0f, 100.0f, 28.0f};
 	private int powerUpIndex = 0;
 	
 	public GameObject SpriteObject;
@@ -57,6 +57,9 @@ public class PlayerAttributes : MonoBehaviour
 					case 1:
 						deactivateBoost();
 						break;
+					case 2:
+						deactivateBanana();
+						break;
 				}				
 			}
 		}
@@ -69,9 +72,9 @@ public class PlayerAttributes : MonoBehaviour
 		var tempColor = Sprite.material.color;
 		tempColor.a = 0.3f;
 		Sprite.material.color = tempColor;
-		
-		this.GetComponent<Wall>().activateGhost();	
-	}	
+
+		this.GetComponent<Wall>().activateGhost();
+	}
 
 	public void deactivateGhost()
 	{
@@ -92,7 +95,17 @@ public class PlayerAttributes : MonoBehaviour
 		this.GetComponent<PlayerMovement>().velocityIndex = 0; 
 	}
 
-    public void addPoint ()
+	public void activateBanana()
+	{
+		this.GetComponent<Wall>().activateBanana();
+	}
+
+	public void deactivateBanana()
+	{
+		this.GetComponent<Wall>().deactivateBanana();
+	}
+
+	public void addPoint ()
     {
         points++;
         Debug.Log("Player points: " + points);
@@ -101,7 +114,7 @@ public class PlayerAttributes : MonoBehaviour
     public void addPowerUp (GameObject power)
     {
         powerUp = power;
-        Debug.Log("Player " + this.GetComponent<PlayerMovement>().playerIndex + " : got Power-up");
+        //Debug.Log("Player " + this.GetComponent<PlayerMovement>().playerIndex + " : got Power-up");
     }
 
     public void removeLife ()
@@ -144,6 +157,11 @@ public class PlayerAttributes : MonoBehaviour
 			{
 				activateBoost();
 				powerUpIndex = 1;
+			}
+			else if (powerUp.name == "ItemBanana(Clone)")
+			{
+				activateBanana();
+				powerUpIndex = 2;
 			}
 
 			powerUpActive[powerUpIndex] = true;
