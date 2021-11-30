@@ -93,6 +93,10 @@ public class Wall : MonoBehaviour
             for (int i = 0; i < walls.Count; i++)
             {
                 indexPath = (int)(path.Count - velocityFactors[velocityIndex] * dt * (1 + i));
+                if (velocityIndex > 0)
+                    walls[i].localScale = new Vector3(1, 1.4f, 1);
+                else
+                    walls[i].localScale = new Vector3(1, 1, 1);
                 if ((isHorizontal[i] && walls[i].position.x == path[indexPath].x) || (!isHorizontal[i] && walls[i].position.y == path[indexPath].y))
                     walls[i].RotateAround(walls[i].position, Vector3.forward, 90);
                 if (walls[i].position.x == path[indexPath].x)
@@ -111,7 +115,7 @@ public class Wall : MonoBehaviour
         playerAttributes = this.GetComponent<PlayerAttributes>();
 
         velocities = playerScript.velocities;
-        velocityFactors = new int[4] { 200, 100, 150, 50 };
+        velocityFactors = new int[4] { 200, 200, 150, 50 };
         isHorizontal = new bool[wallSize];
 
         walls = new List<Transform>();
