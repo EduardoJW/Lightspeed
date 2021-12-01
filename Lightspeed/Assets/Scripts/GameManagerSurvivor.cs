@@ -17,6 +17,8 @@ public class GameManagerSurvivor : MonoBehaviour
 
     private int lastAliveIndex;
     private List<int> deadsIndex = new List<int>();
+    public float timeRemaining = 180;
+    public bool timeIsRunning = false;
 
 
     // Start is called before the first frame update
@@ -31,13 +33,31 @@ public class GameManagerSurvivor : MonoBehaviour
             players[i].GetComponent<PlayerMovement>().enable = true;
             players[i].GetComponent<PlayerAttributes>().lives = numberOfLives;
         }
-        
+
+        timeIsRunning = true;
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         verifyLives();
+        if (timeIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("Time is up, ending match");
+                timeRemaining = 0;
+                timeIsRunning = false;
+                endGame();
+                
+            }
+        }
+
         
     }
 
@@ -155,6 +175,7 @@ public class GameManagerSurvivor : MonoBehaviour
         if (alive <= 1)
         {
             Time.timeScale = 0;
+            timeIsRunning = false;
             endGame();
         }
 
