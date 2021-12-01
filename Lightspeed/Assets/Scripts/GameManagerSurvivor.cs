@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameManagerSurvivor : MonoBehaviour
 {
     public GameObject[] players;
@@ -19,6 +20,7 @@ public class GameManagerSurvivor : MonoBehaviour
     private List<int> deadsIndex = new List<int>();
     public float timeRemaining = 180;
     public bool timeIsRunning = false;
+    public Text displayTime;
 
 
     // Start is called before the first frame update
@@ -47,6 +49,12 @@ public class GameManagerSurvivor : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
+
+                float minutes = Mathf.FloorToInt(timeRemaining / 60);
+                float seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+                displayTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
             }
             else
             {
