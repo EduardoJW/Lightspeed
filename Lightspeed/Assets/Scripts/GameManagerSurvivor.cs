@@ -13,6 +13,7 @@ public class GameManagerSurvivor : MonoBehaviour
     public Text result;
     public int numberOfLives = 3;
     public int numberOfPlayers = 2;
+    public GameObject[] playersHearts;
 
     private Transform transformBase;
 
@@ -34,6 +35,7 @@ public class GameManagerSurvivor : MonoBehaviour
         {
             players[i].GetComponent<PlayerMovement>().enable = true;
             players[i].GetComponent<PlayerAttributes>().lives = numberOfLives;
+            playersHearts[i].SetActive(true);
         }
 
         timeIsRunning = true;
