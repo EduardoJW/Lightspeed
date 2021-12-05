@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GameManagerSurvivor : MonoBehaviour
@@ -22,14 +23,83 @@ public class GameManagerSurvivor : MonoBehaviour
     public float timeRemaining = 180;
     public bool timeIsRunning = false;
     public Text displayTime;
+	
+	private bool isEndGame = false;
+	
+	public GameObject FadeImage;
+	private Renderer Sprite;
+	
+	private bool isFadingOut;
+	
+	public float fadeSpeed;
+	public float fadeCooldown;
+	private float fadeTimer;
+	private int fadeTimerInt;
 
-
+	void setFadeVar(){
+		Sprite = FadeImage.GetComponent<Renderer>();
+		Sprite.enabled = true;
+        isFadingOut = false;
+		fadeTimer = 0.0f;
+		fadeTimerInt = 0;
+		
+		var tempColor = Sprite.material.color;
+		tempColor.a = 0.0f;
+		Sprite.material.color = tempColor;
+	}
+	
+	void checkTransition(){
+		if (isFadingOut == false ){
+			if (Input.GetKeyDown("space")){
+				/* isFadingOut = true; */
+				Time.timeScale = 1.0f;
+				SceneManager.LoadScene("PlayerSelect");	
+			}		
+		}
+		else if (isFadingOut == true){
+			
+			fadeTimer = fadeTimer + fadeSpeed * Time.deltaTime;
+			fadeTimerInt = Mathf.FloorToInt(fadeTimer);
+			
+			var fadeTempInt = fadeTimerInt;
+			fadeTempInt = fadeTempInt / (70/2);
+			fadeTempInt = fadeTempInt * (72/2);
+			
+			var fadeTempFloat = (float)fadeTempInt;
+			
+			var tempColor = Sprite.material.color;
+			tempColor.a = 0.0f+(fadeTempFloat/255.0f);
+			Sprite.material.color = tempColor;
+			
+			
+			if (fadeTimer >= 255.0f){
+				
+				fadeTimer = 0.0f;
+				SceneManager.LoadScene("PlayerSelect");				
+				
+			}
+		
+		}
+		
+		
+		
+	}
     // Start is called before the first frame update
     void Start()
     {
+		setFadeVar();	
+		
         floor();
 
         outerBarriers();
+		
+		var numberOfPlayersTemp = PlayerPrefs.GetInt("playerNumber");
+		
+		if (numberOfPlayersTemp != null) {
+			numberOfPlayers = numberOfPlayersTemp;
+			Debug.Log(numberOfPlayers.ToString());
+		}
+		
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -41,7 +111,14 @@ public class GameManagerSurvivor : MonoBehaviour
         timeIsRunning = true;
 
     }
-
+	void Update() {
+		if (isEndGame == true) {
+			if (Input.GetKeyDown("space")) {
+			
+				checkTransition();		
+			}	
+		}		
+	}
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -84,7 +161,7 @@ public class GameManagerSurvivor : MonoBehaviour
             result.text += position + ". Player " + (deadsIndex[i-1] + 1) + "\n";
             position++;
         }
-
+		isEndGame = true;
         endGamePanel.SetActive(true);
     }
 
@@ -190,4 +267,6 @@ public class GameManagerSurvivor : MonoBehaviour
         }
 
     }
+	
+	
 }
