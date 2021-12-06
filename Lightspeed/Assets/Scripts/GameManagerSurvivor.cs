@@ -220,22 +220,22 @@ public class GameManagerSurvivor : MonoBehaviour
         barriers = Instantiate(barrier);
         barriers.transform.position = new Vector3(7f, 0, 0);
         barriers.transform.RotateAround(barriers.transform.position, Vector3.forward, 90);
-        barriers.transform.localScale = new Vector3(1, 12, 1);
+        barriers.transform.localScale = new Vector3(1, 18, 1);
 
         //barreira da esquerda
         barriers = Instantiate(barrier);
         barriers.transform.position = new Vector3(-7f, 0, 0);
         barriers.transform.RotateAround(barriers.transform.position, Vector3.forward, 90);
-        barriers.transform.localScale = new Vector3(1, 12, 1);
+        barriers.transform.localScale = new Vector3(1, 18, 1);
 
         //barreira de cima
         barriers = Instantiate(barrier);
-        barriers.transform.position = new Vector3(0, 3.7f, 0);
+        barriers.transform.position = new Vector3(0, 3.85f, 0);
         barriers.transform.localScale = new Vector3(1, 22, 1);
 
         //barreira de baixo
         barriers = Instantiate(barrier);
-        barriers.transform.position = new Vector3(0, -3.7f, 0);
+        barriers.transform.position = new Vector3(0, -4.97f, 0);
         barriers.transform.localScale = new Vector3(1, 22, 1);
     }
 
