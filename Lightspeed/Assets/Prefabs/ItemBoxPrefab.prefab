@@ -124,4 +124,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemGhost: {fileID: 8321656259979091611, guid: a2e0a2c00003c644888e5fc47833c6d8, type: 3}
   ItemBoost: {fileID: 864692543302257484, guid: 9fd2e69087f67b14091ccebd983abeca, type: 3}
-  Item2Prefab: {fileID: 3724278550855803343, guid: 89c864d9acabc474994646d902c5f800, type: 3}
+  ItemBanana: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}

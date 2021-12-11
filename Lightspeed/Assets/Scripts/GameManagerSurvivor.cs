@@ -10,6 +10,7 @@ public class GameManagerSurvivor : MonoBehaviour
     public GameObject[] players;
     public GameObject floorTile;
     public GameObject barrier;
+    public GameObject itemBox;
     public GameObject endGamePanel;
     public Text result;
     public int numberOfLives = 3;
@@ -92,8 +93,10 @@ public class GameManagerSurvivor : MonoBehaviour
         floor();
 
         outerBarriers();
-		
-		var numberOfPlayersTemp = PlayerPrefs.GetInt("playerNumber");
+
+        itemBoxes();
+
+        var numberOfPlayersTemp = PlayerPrefs.GetInt("playerNumber");
 		
 		if (numberOfPlayersTemp != null) {
 			numberOfPlayers = numberOfPlayersTemp;
@@ -237,6 +240,14 @@ public class GameManagerSurvivor : MonoBehaviour
         barriers = Instantiate(barrier);
         barriers.transform.position = new Vector3(0, -4.97f, 0);
         barriers.transform.localScale = new Vector3(1, 22, 1);
+    }
+
+    void itemBoxes()
+    {
+        GameObject itemBoxes;
+
+        itemBoxes = Instantiate(itemBox);
+        itemBoxes.transform.position = new Vector3(0, -1f, 0);
     }
 
     void verifyLives () 
