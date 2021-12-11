@@ -3,7 +3,11 @@ guid: 41537ff17572d9b4ba2f639a31dca754
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - wallPrefab: {instanceID: 0}
+  - bananaPrefab: {fileID: 3306654921258665400, guid: 5ec3a3d34b3b3a4478f17cef328e8241, type: 3}
+  - spriteWall: {instanceID: 0}
+  - Sprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
